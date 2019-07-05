@@ -3,17 +3,13 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using System.Linq;
+using System.Diagnostics;
+using Xunit.Abstractions;
 
 namespace JobSequencerTests
 {
     public class JobSequencerTests
     {
-
-        [Fact]
-        public void Check()
-        {
-            //throw new NotImplementedException();
-        }
 
         [Fact]
         public void CheckJobsEmptySequence()
@@ -30,6 +26,7 @@ namespace JobSequencerTests
         /// <summary>
         /// Single Sequence
         /// </summary>
+        /// 
         [Fact]
         public void CheckJobsNoSignicantOrderSingle()
         {
@@ -105,5 +102,8 @@ namespace JobSequencerTests
             var ex = Assert.Throws<Exception>(() => sequencer.SortJobs(input));
             Assert.Equal("Jobs can’t have circular dependencies.", ex.Message);
         }
+
+
+
     }
 }

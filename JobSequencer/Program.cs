@@ -31,7 +31,7 @@ namespace JobSequencerP
                     Console.WriteLine("No job sequence entered.");
                 }
 
-                Console.WriteLine("\n\n");
+                Console.WriteLine();
             }
 
             Console.WriteLine("Press any key to close.");

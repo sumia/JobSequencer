@@ -36,12 +36,13 @@ namespace JobSequencerNS
 
 
             SplitJobs(input);
-            OrderJob();
+            OrderJobs();
             //PrintSequence(jobSeq);
 
 
             //generate output
-            output = jobSeq.Select(x => ReverseString(x.Key + x.Value)).ToList();
+            output = jobSeq.Select(x => ReverseString(x.Key + x.Value)).OrderBy(x => x).ToList();
+
             return output;
         }
 
@@ -51,7 +52,7 @@ namespace JobSequencerNS
         /// Throws error if a job depends on itself e.g. a => a
         /// Throws error it it has circular dependency e.g. a => b => c = a
         /// </summary>
-        private void OrderJob()
+        private void OrderJobs()
         {
             //items that already have been processed are added to list this
             //in order to remove it from the result list
@@ -116,7 +117,8 @@ namespace JobSequencerNS
             //replace all the spaces and new lines
             //it wont matter whether input contains whitespace or not
             input = input.Replace(" ", "");
-            input = Regex.Replace(input, "\n", "");
+            input = input.Replace("\\n", "");
+            
             //get each line of job sequence
             var jobs = Regex.Split(input, "([a-zA-Z]{1}=>[a-zA-Z]*(?!=>))");
         
