@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSequencer", "JobSequencer\JobSequencer.csproj", "{D7B0095C-963F-4235-8124-C77ED1E53329}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSequencerTests", "JobSequencerTests\JobSequencerTests.csproj", "{69A57AE1-4057-4DA5-89C7-920414D27EA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D7B0095C-963F-4235-8124-C77ED1E53329}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7B0095C-963F-4235-8124-C77ED1E53329}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7B0095C-963F-4235-8124-C77ED1E53329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69A57AE1-4057-4DA5-89C7-920414D27EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A57AE1-4057-4DA5-89C7-920414D27EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A57AE1-4057-4DA5-89C7-920414D27EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A57AE1-4057-4DA5-89C7-920414D27EA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
