@@ -2,10 +2,11 @@ using JobSequencerNS;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using System.Linq;
 
 namespace JobSequencerTests
 {
-    public class UnitTest1
+    public class JobSequencerTests
     {
 
         [Fact]
@@ -52,8 +53,9 @@ namespace JobSequencerTests
             var sequencer = new JobSequencer();
             var actualOutput = sequencer.SortJobs(input);
 
-            var expectedOutput = new List<string>() { "bac" };
-            Assert.NotStrictEqual(expectedOutput, actualOutput);
+            var expectedOutput = new List<string>() { "b", "a", "c" };
+            Assert.True(expectedOutput.Count == actualOutput.Count
+                && actualOutput.All(x => expectedOutput.Any(y=>y.Equals(x))));
         }
 
 
@@ -66,7 +68,8 @@ namespace JobSequencerTests
             var actualOutput = sequencer.SortJobs(input);
 
             var expectedOutput = new List<string>() { "cb", "a" };
-            Assert.NotStrictEqual(expectedOutput, actualOutput);
+            Assert.True(expectedOutput.Count == actualOutput.Count
+                && actualOutput.All(x => expectedOutput.Any(y => y.Equals(x))));
         }
 
         [Fact]
@@ -78,7 +81,9 @@ namespace JobSequencerTests
             var actualOutput = sequencer.SortJobs(input);
 
             var expectedOutput = new List<string>() { "fcbe", "ad" };
-            Assert.NotStrictEqual(expectedOutput, actualOutput);
+            //Assert.NotStrictEqual(expectedOutput, actualOutput);
+            Assert.True(expectedOutput.Count == actualOutput.Count
+                && actualOutput.All(x => expectedOutput.Any(y => y.Equals(x))));
         }
 
         [Fact]

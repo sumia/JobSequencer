@@ -34,14 +34,14 @@ namespace JobSequencerNS
                 return output;
             }
 
-            
+
             SplitJobs(input);
             OrderJob();
             //PrintSequence(jobSeq);
 
 
             //generate output
-            output =  jobSeq.Select(x => ReverseString(x.Key + x.Value)).ToList();
+            output = jobSeq.Select(x => ReverseString(x.Key + x.Value)).ToList();
             return output;
         }
 
@@ -53,10 +53,16 @@ namespace JobSequencerNS
         /// </summary>
         private void OrderJob()
         {
-            for(int i=0; i< jobSeq.Count; i++)
+            //items that already have been processed are added to list this
+            //in order to remove it from the result list
+            var list = new List<string>();
+
+            for (int i = 0; i < jobSeq.Count; i++)
             {
                 var job = jobSeq.ElementAt(i);
-            
+                //if(jobSeq.Any(x=>x.Value.Contains(job.Value))) { continue; }
+                if (list.Contains(job.Key)) continue;
+
                 //check self dependency
                 if (job.Key.Equals(job.Value))
                 {
@@ -69,7 +75,7 @@ namespace JobSequencerNS
                 while (!string.IsNullOrEmpty(dependentJob))
                 {
                     //check circular dependency
-                    if(seq.Contains(dependentJob))
+                    if (seq.Contains(dependentJob))
                     {
                         throw new Exception("Jobs can’t have circular dependencies.");
                     }
@@ -79,23 +85,22 @@ namespace JobSequencerNS
 
                     //try to find next dependenct job
                     var found = jobSeq.Where(x => x.Key.Equals(dependentJob)).FirstOrDefault();
-                    dependentJob = found.Key != null ? found.Value : string.Empty;                    
+                    dependentJob = found.Key != null ? found.Value : string.Empty;
                 }
 
                 //join the sequences together
                 //[a,b,c] => abc
                 var seqStr = string.Join("", seq);
 
-                //removes the jobs that have been processed
-                //taking the fact that two different jobs wont be depending on the same job
-                //example: b=>c, a =>c has not been considered
-                seq.ForEach(j => jobSeq.Remove(j));
+                //add processed jobs to the removal list
+                list.AddRange(seq);
 
-                //assign dependent job to the main one
+                //assign dependent jobs to the main one
                 jobSeq[job.Key] = seqStr;
             }
 
-     
+            list.ForEach(j => jobSeq.Remove(j));
+
         }
 
 
@@ -108,19 +113,21 @@ namespace JobSequencerNS
         {
 
             //var jobs = input.Split("\n");
-            //replace all the spaces
+            //replace all the spaces and new lines
+            //it wont matter whether input contains whitespace or not
             input = input.Replace(" ", "");
-
+            input = Regex.Replace(input, "\n", "");
             //get each line of job sequence
             var jobs = Regex.Split(input, "([a-zA-Z]{1}=>[a-zA-Z]*(?!=>))");
-            foreach(var seq in jobs)
+        
+            foreach (var seq in jobs)
             {
                 if (seq.Equals("")) continue;
                 var str = seq.Split("=>");
                 var key = str.ElementAt(0).Trim();
                 var val = str.Length == 2 ? str.ElementAt(1).Trim() : string.Empty;
-                
-                jobSeq.Add(key,val);
+
+                jobSeq.Add(key, val);
             }
 
         }
