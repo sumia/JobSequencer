@@ -1,5 +1,6 @@
 using JobSequencerNS;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace JobSequencerTests
@@ -17,19 +18,44 @@ namespace JobSequencerTests
         public void CheckJobsEmptySequence()
         {
             var input = "";
-            string[] output = null;
+         
+            var sequencer = new JobSequencer();
+            var actualOutput = sequencer.SortJobs(input);
+
+            Assert.Empty(actualOutput);
+        }
+
+
+        /// <summary>
+        /// Single Sequence
+        /// </summary>
+        [Fact]
+        public void CheckJobsNoSignicantOrderSingle()
+        {
+            var input = "a =>";
 
             var sequencer = new JobSequencer();
-            output = sequencer.SortJobs(input);
+            var actualOutput = sequencer.SortJobs(input);
 
-            Assert.Empty(output);
+            var expectedOutput = new List<string>(){ "a" };
+            Assert.Equal(expectedOutput, actualOutput);
         }
 
+        /// <summary>
+        /// Multi sequence
+        /// </summary>
         [Fact]
-        public void CheckJobsNoSignicantOrder()
+        public void CheckJobsNoSignicantOrderMulti()
         {
+            var input = "a =>\nb=>\nc=>";
+        
+            var sequencer = new JobSequencer();
+            var actualOutput = sequencer.SortJobs(input);
 
+            var expectedOutput = new List<string>() { "bac" };
+            Assert.NotStrictEqual(expectedOutput, actualOutput);
         }
+
 
         [Fact]
         public void CheckJobDependancy()

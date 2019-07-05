@@ -15,7 +15,7 @@ namespace JobSequencerP
 
             //check empty sequence
             var result = sequencer.SortJobs("");
-            if (result != null && result.Length > 0)
+            if (result != null && result.Count > 0)
             {
                 foreach (var seq in result)
                 {
