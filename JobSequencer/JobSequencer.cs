@@ -18,7 +18,7 @@ namespace JobSequencerNS
 
         /// <summary>
         /// Main Calculation        
-        /// Input is splitted into jobs, grouped by order
+        /// Input is splitted into jobs, and then grouped by order of execution
         /// </summary>
         /// <param name="input">A single string representing ordered sequence of jobs</param>
         /// <returns>List of string with ordered job sequence</returns>
@@ -41,7 +41,7 @@ namespace JobSequencerNS
 
 
             //generate output
-            output = jobSeq.Select(x => ReverseString(x.Key + x.Value)).OrderBy(x => x).ToList();
+            output = jobSeq.Select(x => ReverseString(x.Key + x.Value)).ToList();
 
             return output;
         }
@@ -61,8 +61,7 @@ namespace JobSequencerNS
             for (int i = 0; i < jobSeq.Count; i++)
             {
                 var job = jobSeq.ElementAt(i);
-                //if(jobSeq.Any(x=>x.Value.Contains(job.Value))) { continue; }
-                if (list.Contains(job.Key)) continue;
+                if (list.Contains(job.Key)) continue; //job already processed, take next one
 
                 //check self dependency
                 if (job.Key.Equals(job.Value))
@@ -98,10 +97,11 @@ namespace JobSequencerNS
 
                 //assign dependent jobs to the main one
                 jobSeq[job.Key] = seqStr;
+  
             }
 
             list.ForEach(j => jobSeq.Remove(j));
-
+          
         }
 
 
