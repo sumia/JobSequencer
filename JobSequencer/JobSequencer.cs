@@ -113,12 +113,10 @@ namespace JobSequencerNS
         private void SplitJobs(string input)
         {
 
-            //var jobs = input.Split("\n");
             //replace all the spaces and new lines
             //it wont matter whether input contains whitespace or not
-            input = input.Replace(" ", "");
-            input = input.Replace("\\n", "");
-            
+            input = Regex.Replace(input, @"\s|\\n", "");
+
             //get each line of job sequence
             var jobs = Regex.Split(input, "([a-zA-Z]{1}=>[a-zA-Z]*(?!=>))");
         
